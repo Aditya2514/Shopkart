@@ -15,7 +15,7 @@ const Port = 8085;
 
 dotenv.config();
 
-dbUrl = process.env.dbUrl;
+const dbUrl = process.env.dbUrl;
 
 app.use(cors({
   origin: 'http://localhost:5173',
