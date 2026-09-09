@@ -8,16 +8,19 @@ const protect = async (req, res, next) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const customer = await Customer.findById(decoded.id).select("-password");
 
-  const customer = await Customer.findById(decoded.id).select("-password");
+    if (!customer) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
 
-  if (!customer) {
+    req.user = customer;
+    next();
+  } catch (err) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
-
-  req.user = customer;
-  next();
 };
 
 module.exports = { protect };

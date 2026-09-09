@@ -33,7 +33,7 @@ const Register = () => {
         password: form.password,
         phone: form.phone,
       });
-      navigate("/login");
+      navigate("/login", { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
     } finally {

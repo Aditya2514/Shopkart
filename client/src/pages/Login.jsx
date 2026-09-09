@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import { useAuth } from '../context/AuthContext'
 
 const Login = () => {
   const navigate = useNavigate()
+  const { setUser } = useAuth()
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -26,7 +28,9 @@ const Login = () => {
         email: form.email,
         password: form.password,
       })
-      navigate('/home')
+      const meRes = await api.get('/customers/me')
+      setUser(meRes.data)
+      navigate('/home', { replace: true })
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong')
     } finally {
