@@ -1,0 +1,87 @@
+const Customer = require("../models/customer.model");
+const bcrypt = require("bcrypt");
+const generateToken = require("../utils/generateToken");
+
+const registerCustomer = async (req, res) => {
+  const { fullName, email, password, phone } = req.body;
+
+  if (!fullName || !email || !password || !phone) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required" });
+  }
+
+  if (password.length < 6) {
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: "Password must be at least 6 characters",
+      });
+  }
+
+  const existing = await Customer.findOne({ email });
+  if (existing) {
+    return res
+      .status(409)
+      .json({ success: false, message: "Email already exists" });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const customer = await Customer.create({
+    fullName,
+    email,
+    password: hashedPassword,
+    phone,
+  });
+
+  res.status(201).json({
+    success: true,
+    message: "Customer registered successfully",
+    customer: {
+      _id: customer._id,
+      fullName: customer.fullName,
+      email: customer.email,
+      phone: customer.phone,
+    },
+  });
+};
+
+const loginCustomer = async (req, res) => {
+  const { email, password } = req.body;
+
+  const customer = await Customer.findOne({ email });
+  if (!customer) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid credentials" });
+  }
+
+  const isMatch = await bcrypt.compare(password, customer.password);
+  if (!isMatch) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid credentials" });
+  }
+
+  generateToken(res, customer._id);
+
+  res.status(200).json({ success: true, message: "Login successful" });
+};
+
+const getProfile = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
+const logoutCustomer = async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ success: true, message: "Logged out successfully" });
+};
+
+module.exports = {
+  registerCustomer,
+  loginCustomer,
+  getProfile,
+  logoutCustomer,
+};
