@@ -94,6 +94,7 @@ const loginCustomer = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
+  res.set("Cache-Control", "no-store");
   res.status(200).json(req.user);
 };
 
