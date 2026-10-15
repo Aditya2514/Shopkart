@@ -1,5 +1,6 @@
-.env
-Lab-01 (ShopKart).md
+.env*
 node_modules
-Lab-02 (client Server Auth).md
+Lab*
 UI.png
+dist
+.DS_Store

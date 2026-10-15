@@ -1,27 +1,20 @@
 const LoadingScreen = () => {
   return (
-    <div
-      className="min-h-screen w-full flex flex-col items-center justify-center font-sans select-none"
-      style={{ backgroundColor: "#FAF7F2" }}
-    >
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#070709] select-none text-stone-200">
       <div className="flex flex-col items-center">
-        {/* Animated Brand Loader */}
-        <div className="relative flex items-center justify-center mb-5">
-          {/* Subtle pulsating ambient glow */}
-          <div className="absolute w-24 h-24 rounded-full bg-amber-500/10 blur-xl animate-pulse" />
+        <div className="relative flex items-center justify-center mb-6">
+          <div className="absolute w-28 h-28 rounded-full bg-[#CCA46B]/15 blur-2xl animate-pulse" />
+          <div className="w-20 h-20 rounded-full border-[2px] border-[#CCA46B]/20 border-t-[#CCA46B] animate-spin" />
+          <div className="absolute w-14 h-14 rounded-full border-[1.5px] border-[#E5C07B]/25 border-b-[#E5C07B] animate-spin [animation-direction:reverse] [animation-duration:1.5s]" />
 
-          {/* Smooth spinning ring */}
-          <div className="w-20 h-20 rounded-full border-[3px] border-amber-200/70 border-t-[#B45309] animate-spin" />
-
-          {/* Center brand badge */}
-          <div className="absolute w-13 h-13 rounded-full bg-white shadow-sm border border-stone-200/80 flex items-center justify-center">
+          <div className="absolute w-10 h-10 rounded-full bg-[#0E0E14] border border-[#CCA46B]/30 flex items-center justify-center shadow-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-[#B45309]"
+              className="h-5 w-5 text-[#CCA46B]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.75}
             >
               <path
                 strokeLinecap="round"
@@ -32,20 +25,18 @@ const LoadingScreen = () => {
           </div>
         </div>
 
-        {/* Brand Name */}
-        <h1 className="text-2xl font-extrabold text-stone-900 tracking-tight">
-          Shop<span className="text-[#B45309]">Kart</span>
+        <h1 className="text-2xl font-normal tracking-wide text-white font-editorial">
+          Shop<span className="text-[#CCA46B] italic font-semibold">Kart</span>
         </h1>
 
-        {/* Subtitle with animated dots */}
-        <div className="flex items-center gap-1.5 mt-2.5">
-          <span className="text-xs font-semibold uppercase tracking-[2.5px] text-stone-400">
-            Loading
+        <div className="flex items-center gap-2 mt-3">
+          <span className="text-[11px] font-semibold uppercase tracking-[3px] text-[#A09D98]">
+            Loading ShopKart
           </span>
-          <span className="flex items-center gap-1 ml-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B45309] animate-bounce [animation-delay:-0.3s]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B45309] animate-bounce [animation-delay:-0.15s]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B45309] animate-bounce" />
+          <span className="flex items-center gap-1 ml-1">
+            <span className="w-1 h-1 rounded-full bg-[#CCA46B] animate-bounce [animation-delay:-0.3s]" />
+            <span className="w-1 h-1 rounded-full bg-[#CCA46B] animate-bounce [animation-delay:-0.15s]" />
+            <span className="w-1 h-1 rounded-full bg-[#CCA46B] animate-bounce" />
           </span>
         </div>
       </div>

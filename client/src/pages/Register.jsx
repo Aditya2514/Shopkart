@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
-import heroImg from "../assets/register_hero.png";
+import authHeroImg from "../assets/shop_luxury_hero.jpg";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,52 +36,71 @@ const Register = () => {
       });
       navigate("/login", { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(err.response?.data?.message || "Registration failed. Please check your details.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className="flex min-h-screen font-sans"
-      style={{ backgroundColor: "#FAF7F2" }}
-    >
-      {/* ── LEFT PANEL ── */}
-      <div
-        className="hidden lg:block w-[50%] shrink-0 relative overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "left top",
-        }}
-      />
+    <div className="flex min-h-screen bg-[#070709] text-stone-200 selection:bg-[#CCA46B]/30 selection:text-[#E5C07B]">
+      <div className="hidden lg:flex lg:w-[50%] relative overflow-hidden flex-col justify-between p-12 bg-[#0A0A0F]">
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
+          style={{
+            backgroundImage: `url(${authHeroImg})`,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/40 to-transparent" />
+        <div className="absolute inset-0 bg-radial from-transparent via-[#070709]/30 to-[#070709]" />
 
-      {/* ── RIGHT PANEL — warm cream bg with floating card ── */}
-      <div
-        className="flex flex-1 items-center justify-center px-8 py-6"
-        style={{ backgroundColor: "#FAF7F2" }}
-      >
-        <div className="w-full max-w-112.5 bg-white rounded-2xl shadow-lg px-10 py-7">
-          {/* Eyebrow */}
-          <p className="text-xs font-bold tracking-[2.5px] uppercase text-amber-600 mb-2.5">
-            Create Your Account
+        <div className="relative z-10">
+          <Link to="/" className="inline-flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#CCA46B] to-[#99733E] flex items-center justify-center text-black font-bold text-sm shadow-[0_0_20px_rgba(204,164,107,0.35)]">
+              SK
+            </div>
+            <span className="text-2xl font-editorial tracking-tight text-white">
+              Shop<span className="text-[#CCA46B] italic font-semibold">Kart</span>
+            </span>
+          </Link>
+        </div>
+
+        <div className="relative z-10 max-w-md">
+          <p className="text-xs uppercase tracking-[3px] font-semibold text-[#CCA46B] mb-2">
+            ShopKart Membership
           </p>
-
-          {/* Title */}
-          <h2 className="text-[28px] font-extrabold text-stone-900 tracking-tight mb-1.5">
-            Join ShopKart today
+          <h2 className="text-3xl font-editorial font-normal text-white leading-tight mb-3">
+            Your Universe of Products.
           </h2>
-          <p className="text-sm text-stone-500 mb-4">
-            Start your shopping journey with us
+          <p className="text-sm text-stone-300 font-light leading-relaxed">
+            Create your account to unlock fast doorstep delivery, daily grocery savings, trending tech, and curated lifestyle essentials.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-1 items-center justify-center px-6 sm:px-12 py-10 relative">
+        <div className="absolute w-96 h-96 rounded-full bg-[#CCA46B]/5 blur-3xl pointer-events-none" />
+
+        <div className="w-full max-w-md bg-[#0E0E14] border border-white/[0.08] rounded-3xl p-8 sm:p-10 shadow-2xl relative z-10">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-[#CCA46B] animate-pulse" />
+            <p className="text-xs font-semibold tracking-[3px] uppercase text-[#CCA46B]">
+              Membership
+            </p>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-editorial font-normal text-white mb-1.5">
+            Create an Account
+          </h2>
+          <p className="text-xs text-stone-400 mb-6">
+            Enter your details to register as a ShopKart customer
           </p>
 
-          {/* Error Banner */}
           {error && (
-            <div className="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 text-sm font-medium rounded-xl px-4 py-3 mb-4 shadow-sm">
+            <div className="flex items-center gap-3 bg-red-950/40 border border-red-800/60 text-red-300 text-xs rounded-xl px-4 py-3.5 mb-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-red-600 shrink-0"
+                className="h-4 w-4 text-red-400 shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -96,27 +114,15 @@ const Register = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-3.5">
-            {/* Full Name */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-[13px] font-semibold text-stone-800 mb-1.5">
+              <label className="block text-xs font-medium uppercase tracking-wider text-stone-300 mb-1.5">
                 Full Name
               </label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </span>
                 <input
@@ -125,33 +131,21 @@ const Register = () => {
                   name="fullName"
                   value={form.fullName}
                   onChange={handleChange}
-                  placeholder="Full name"
+                  placeholder="e.g. Alexander Vance"
                   required
-                  className="w-full border-[1.5px] border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm text-stone-800 bg-stone-50 placeholder-stone-300 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white"
+                  className="w-full bg-[#14141C] border border-white/[0.08] focus:border-[#CCA46B] focus:ring-1 focus:ring-[#CCA46B] rounded-xl pl-10 pr-4 py-2.5 text-sm text-stone-100 placeholder-stone-600 outline-none transition-all duration-200"
                 />
               </div>
             </div>
 
-            {/* Email */}
             <div>
-              <label className="block text-[13px] font-semibold text-stone-800 mb-1.5">
-                Email address
+              <label className="block text-xs font-medium uppercase tracking-wider text-stone-300 mb-1.5">
+                Email Address
               </label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </span>
                 <input
@@ -160,33 +154,21 @@ const Register = () => {
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  placeholder="Email address"
+                  placeholder="name@example.com"
                   required
-                  className="w-full border-[1.5px] border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm text-stone-800 bg-stone-50 placeholder-stone-300 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white"
+                  className="w-full bg-[#14141C] border border-white/[0.08] focus:border-[#CCA46B] focus:ring-1 focus:ring-[#CCA46B] rounded-xl pl-10 pr-4 py-2.5 text-sm text-stone-100 placeholder-stone-600 outline-none transition-all duration-200"
                 />
               </div>
             </div>
 
-            {/* Phone */}
             <div>
-              <label className="block text-[13px] font-semibold text-stone-800 mb-1.5">
-                Mobile number
+              <label className="block text-xs font-medium uppercase tracking-wider text-stone-300 mb-1.5">
+                Mobile Number (10 digits)
               </label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </span>
                 <input
@@ -195,33 +177,22 @@ const Register = () => {
                   name="phone"
                   value={form.phone}
                   onChange={handleChange}
-                  placeholder="Mobile number"
+                  placeholder="9876543210"
+                  pattern="[0-9]{10}"
                   required
-                  className="w-full border-[1.5px] border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm text-stone-800 bg-stone-50 placeholder-stone-300 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white"
+                  className="w-full bg-[#14141C] border border-white/[0.08] focus:border-[#CCA46B] focus:ring-1 focus:ring-[#CCA46B] rounded-xl pl-10 pr-4 py-2.5 text-sm text-stone-100 placeholder-stone-600 outline-none transition-all duration-200"
                 />
               </div>
             </div>
 
-            {/* Password */}
             <div>
-              <label className="block text-[13px] font-semibold text-stone-800 mb-1.5">
-                Password
+              <label className="block text-xs font-medium uppercase tracking-wider text-stone-300 mb-1.5">
+                Password (min. 6 characters)
               </label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </span>
                 <input
@@ -230,122 +201,72 @@ const Register = () => {
                   name="password"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="Password"
+                  placeholder="Create a strong password"
                   required
-                  className="w-full border-[1.5px] border-stone-200 rounded-xl pl-10 pr-11 py-3 text-sm text-stone-800 bg-stone-50 placeholder-stone-300 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white"
+                  className="w-full bg-[#14141C] border border-white/[0.08] focus:border-[#CCA46B] focus:ring-1 focus:ring-[#CCA46B] rounded-xl pl-10 pr-11 py-2.5 text-sm text-stone-100 placeholder-stone-600 outline-none transition-all duration-200"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((p) => !p)}
                   aria-label="Toggle password visibility"
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600 transition-colors cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-[#CCA46B] transition-colors cursor-pointer"
                 >
                   {showPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M17.94 17.94A10.07 10.07 0 0112 20c-5.523 0-10-4.477-10-8 0-1.274.402-2.46 1.06-3.47M6.53 6.53A9.97 9.97 0 0112 4c5.523 0 10 4.477 10 8a9.96 9.96 0 01-2.343 6.343M3 3l18 18"
-                      />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17.94 17.94A10.07 10.07 0 0112 20c-5.523 0-10-4.477-10-8 0-1.274.402-2.46 1.06-3.47M6.53 6.53A9.97 9.97 0 0112 4c5.523 0 10 4.477 10 8a9.96 9.96 0 01-2.343 6.343M3 3l18 18" />
                     </svg>
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                   )}
                 </button>
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               id="register-btn"
               type="submit"
               disabled={loading}
-              className="w-full bg-[#B45309] hover:bg-[#92400e] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-[15px] py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(180,83,9,0.30)] hover:shadow-[0_6px_20px_rgba(146,64,14,0.38)] cursor-pointer"
+              className="w-full mt-3 bg-gradient-to-r from-[#D9A862] via-[#CCA46B] to-[#B88E52] hover:brightness-110 active:scale-[0.99] text-black font-semibold text-xs uppercase tracking-[2px] py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(204,164,107,0.25)] hover:shadow-[0_0_30px_rgba(204,164,107,0.4)] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? (
                 <>
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8z"
-                    />
+                  <svg className="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                   </svg>
-                  Creating Account...
+                  <span>Creating Account...</span>
                 </>
               ) : (
                 <span className="flex items-center gap-2">
-                  Create Account
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
+                  <span>Create Account</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </span>
               )}
             </button>
           </form>
 
-          {/* Divider */}
-          <hr className="border-stone-100 mt-5 mb-4" />
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/[0.08]" />
+            </div>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-[2px]">
+              <span className="bg-[#0E0E14] px-3 text-stone-500">Already a Member?</span>
+            </div>
+          </div>
 
-          {/* Footer Link */}
-          <p className="text-center text-stone-500 text-sm">
+          <p className="text-center text-xs text-stone-400">
             Already have an account?{" "}
             <Link
               to="/login"
               replace
-              className="text-amber-700 hover:text-amber-800 font-bold transition-colors"
+              className="text-[#CCA46B] hover:text-[#E5C07B] font-semibold transition-colors"
             >
-              Login
+              Sign in
             </Link>
           </p>
         </div>

@@ -1,3 +1,5 @@
+
+
 const Customer = require("../models/customer.model");
 const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generateToken");
