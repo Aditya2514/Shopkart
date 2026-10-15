@@ -13,12 +13,14 @@ const connectDB = async () => {
   }
 
   try {
-    const db = await mongoose.connect(dbUrl);
+    const db = await mongoose.connect(dbUrl, {
+      serverSelectionTimeoutMS: 5000,
+    });
     isConnected = db.connections[0].readyState === 1;
     console.log("DB Connection OK");
     return db;
   } catch (err) {
-    console.error("MongoDB connection error:", err);
+    console.error("MongoDB connection error:", err.message);
     throw err;
   }
 };
