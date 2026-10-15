@@ -27,12 +27,27 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// Root health check endpoint
+// Root health check endpoints
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// Database connection middleware for both serverless and long-running modes
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection failed:", err.message);
+    return res.status(500).json({
+      success: false,
+      message: "Database connection failed",
+      error: err.message,
+    });
+  }
 });
 
 // Direct route mounting (local development)
